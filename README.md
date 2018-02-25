@@ -13,4 +13,5 @@ If your username/password has illegal characters you will need to escape them wi
 Providers Supported:
 
 www.nordvpn.com ->  nord
+
 www.ipvanosh.com -> ipvanish
