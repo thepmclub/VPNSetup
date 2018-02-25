@@ -9,3 +9,8 @@ Install using: curl -sSL https://raw.githubusercontent.com/thepmclub/VPNSetup/ma
 Setup VPN to work with NordVPN: pmcvpnsetup nord username password
 
 If your username/password has illegal characters you will need to escape them with single quotes, i.e pmcvpnsetup nord username '!password'
+
+Providers Supported:
+
+www.nordvpn.com ->  nord
+www.ipvanosh.com -> ipvanish
