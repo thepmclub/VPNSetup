@@ -9,7 +9,7 @@
 #################################################################################
 
 vpnprovider="$1"
-vpnfiles="http://vpnsetup.the-pm.club/openvpn/${vpnprovider}-files.zip"
+vpnfiles="https://github.com/thepmclub/VPNSetup/blob/master/${vpnprovider}-files.zip?raw=true"
 vpnuser="$2"
 vpnpass="$3"
 
