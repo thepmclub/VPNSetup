@@ -1,0 +1,77 @@
+#!/bin/bash
+# This is a basic script designed to work with openVPN and the VPN Changer plugin
+# for enigma2 devices. 
+# Use this script entirely at your own risk, if it bricks your box don't brick my 
+# windows please!
+# Release 0.0.1a
+#################################################################################
+# Configurarion Options / Variables.                                            #
+#################################################################################
+
+vpnprovider="$1"
+vpnfiles="http://vpnsetup.the-pm.club/openvpn/${vpnprovider}-files.zip"
+vpnuser="$2"
+vpnpass="$3"
+
+# !!! DANGER !!! DO NOT EDIT BEYOND THIS POINT UNLESS YOU KNOW WHAT YOU ARE DOING
+# YOU'VE BEEN WARNED !!! DANGER !!
+
+if curl -f ${vpnfiles} >/dev/null 2>&1; then
+
+  # Make openVPN directory
+
+	  mkdir -p /etc/openvpn
+
+  # Remove the VPN Folder if already exists
+
+          rm -rf /hdd/vpn/${vpnprovider}
+
+  # Make VPN Config directory
+
+	  mkdir /hdd/vpn/${vpnprovider}
+
+  # Fetch the openvpn config files and put them in /hdd/vpn
+
+	  wget ${vpnfiles} -P /hdd/vpn/${vpnprovider}
+
+  # Extract VPN config files
+
+	  unzip /hdd/vpn/${vpnprovider}/${vpnprovider}-files.zip -d /hdd/vpn/${vpnprovider}/
+
+  # Rename files if required.
+	
+	  for x in /hdd/vpn/${vpnprovider}/*.ovpn; 
+		do mv "$x" "${x%.ovpn}.conf"; 
+	  done
+
+  # Set config files to use password.conf
+
+	  find /hdd/vpn/${vpnprovider}/ -name "*.conf" -exec sed -i "s/auth-user-pass/auth-user-pass auth.txt/g" '{}' \;
+
+          for file in /hdd/vpn/${vpnprovider}/*; do
+		dir=${file%%.*}
+   		mkdir -p "$dir"
+    		mv "$file" "$dir"
+	  done
+
+  # Add username and password to password.conf
+
+          # Remove existing auth file if already present.
+          rm -rf /tmp/auth.txt
+	  echo "${vpnuser}" >> /tmp/auth.txt
+	  echo "${vpnpass}" >> /tmp/auth.txt
+  
+          #Enable if box has issues with line breaks, disable above two.
+          #echo -e "${vpnuser}\n${vpnpass}" >> /tmp/auth.txt
+
+          find /hdd/vpn/${vpnprovider} -type d -exec cp /tmp/auth.txt {} \;
+          rm /hdd/vpn/${vpnprovider}/auth.txt
+	  echo "Success, your VPN is setup and ready togo!"
+	  echo ""
+	  echo "Your Username is: ${vpnuser}"
+	  echo "Your Password is: ${vpnpass}"
+	  echo ""
+	  echo "If the above details are wrong, your VPN won't connect!"
+  else
+  	  echo "Sorry, your VPN provider isn't supported!"
+fi
