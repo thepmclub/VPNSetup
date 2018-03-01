@@ -1,5 +1,5 @@
 #!/bin/bash
-wget https://github.com/thepmclub/VPNSetup/raw/master/enigma2-plugin-extensions-vpnchanger_1.1.0_all.ipk /tmp/enigma2-plugin-extensions-vpnchanger_1.1.0_all.ipk
+wget https://github.com/thepmclub/VPNSetup/raw/master/enigma2-plugin-extensions-vpnchanger_1.1.0_all.ipk -O /tmp/enigma2-plugin-extensions-vpnchanger_1.1.0_all.ipk
 opkg install /tmp/enigma2-plugin-extensions-vpnchanger_1.1.0_all.ipk
 mv /usr/lib/enigma2/python/Plugins/Extensions/VpnChanger/plugin.py /usr/lib/enigma2/python/Plugins/Extensions/VpnChanger/plugin.py-org
 wget https://raw.githubusercontent.com/thepmclub/VPNSetup/master/plugin.py -O /usr/lib/enigma2/python/Plugins/Extensions/VpnChanger/plugin.py
